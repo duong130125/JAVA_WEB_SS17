@@ -5,6 +5,29 @@
     <title>Title</title>
 </head>
 <body>
+<h2>Danh sách sản phẩm</h2>
+<div th:each="product : ${products}">
+    <h3 th:text="${product.productName}"></h3>
+    <p th:text="${product.description}"></p>
+    <p>Giá: <span th:text="${product.price}"></span> VND</p>
+    <p>Kho: <span th:text="${product.stock}"></span></p>
+    <div>
+        <img th:src="@{${product.image}}" alt="Image" style="max-width:150px; max-height:150px;"/>
+    </div>
+    <a th:href="@{/home/product/{id}(id=${product.id})}">Xem chi tiết</a>
+    <hr/>
+</div>
 
+<div>
+        <span th:if="${currentPage > 1}">
+            <a th:href="@{/home(page=${currentPage - 1})}">Trang trước</a>
+        </span>
+
+    <span>Trang <span th:text="${currentPage}"></span> / <span th:text="${totalPages}"></span></span>
+
+    <span th:if="${currentPage < totalPages}">
+            <a th:href="@{/home(page=${currentPage + 1})}">Trang sau</a>
+        </span>
+</div>
 </body>
 </html>
