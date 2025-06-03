@@ -5,9 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ra.entity.Customer;
 import ra.service.AuthService;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class AuthController {
@@ -32,7 +35,31 @@ public class AuthController {
 
         // Gửi thông báo thành công về cho view
         redirectAttributes.addFlashAttribute("success", "Đăng ký thành công!");
-        return "redirect:/register";
+        return "redirect:/login";
+    }
+    @GetMapping("login")
+    public String loginForm(Model model) {
+        model.addAttribute("customer", new Customer());
+        return "login";
     }
 
+    @PostMapping("login")
+    public String login(@RequestParam String username, @RequestParam String password, Model model, HttpSession session) {
+        Customer customer = authService.login(username, password);
+        if (customer == null) {
+            model.addAttribute("error", "Tài khoản mật khẩu không chính xác!");
+            return "login";
+        }
+
+        session.setAttribute("customerId", customer.getId());
+        session.setAttribute("customer", customer);
+
+        if(customer.getRole().equals("ADMIN")) {
+            session.setAttribute("loggedInUser", customer);
+            return "redirect:/admin";
+        } else {
+            session.setAttribute("loggedInUser", customer);
+            return "redirect:/home";
+        }
+    }
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface AuthService {
     List<Customer> findAll();
+    Customer login(String username, String password);
     Customer findById(int id);
     Customer findByEmail(String email);
     Customer findByUsername(String username);

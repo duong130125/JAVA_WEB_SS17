@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2 th:text="${product.productName}"></h2>
+
+    <div>
+        <img th:src="@{${product.image}}" alt="Image" style="max-width:300px; max-height:300px;" />
+    </div>
+
+    <p><strong>Mô tả:</strong> <span th:text="${product.description}"></span></p>
+    <p><strong>Giá:</strong> <span th:text="${product.price}"></span> VND</p>
+    <p><strong>Tồn kho:</strong> <span th:text="${product.stock}"></span></p>
+
+    <form th:action="@{'/cart/add/' + ${product.id}}" method="post">
+        <input type="number" name="quantity" value="1" min="1" />
+        <button type="submit">Thêm vào giỏ hàng</button>
+    </form>
+
+    <a th:href="@{/home}">Quay lại</a>
+</body>
+</html>

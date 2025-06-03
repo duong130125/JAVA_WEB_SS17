@@ -28,6 +28,16 @@ public class AuthRepoImpl implements AuthRepo {
     }
 
     @Override
+    public Customer login(String username, String password) {
+        Session session = sessionFactory.openSession();
+
+        Query<Customer> query = session.createQuery("FROM Customer where username = :username and password = :password", Customer.class);
+        query.setParameter("username", username);
+        query.setParameter("password", password);
+        return query.uniqueResult();
+    }
+
+    @Override
     public Customer findById(int id) {
         Session session = sessionFactory.openSession();
         Customer customer = session.get(Customer.class, id);

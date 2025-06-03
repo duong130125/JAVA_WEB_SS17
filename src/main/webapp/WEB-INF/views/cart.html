@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Giỏ Hàng Của Bạn</h2>
+
+    <div th:if="${#lists.isEmpty(cartItems)}">
+        <p>Giỏ hàng trống.</p>
+        <a th:href="@{/home}">Quay lại mua sắm</a>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(cartItems)}">
+        <form th:action="@{/cart/clear}" method="post">
+            <button type="submit">Xóa Tất Cả</button>
+        </form>
+
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Hình ảnh</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cartItems}">
+                <td th:text="${item.product.productName}"></td>
+                <td>
+                    <img th:src="@{${item.product.image}}" alt="Hình ảnh" width="100"/>
+                </td>
+                <td th:text="${item.product.price}"></td>
+
+                <td>
+                    <form th:action="@{/cart/update/{id}(id=${item.id})}" method="post">
+                        <input type="number" name="quantity" th:value="${item.quantity}" min="1"/>
+                        <button type="submit">Cập nhật</button>
+                    </form>
+                </td>
+
+                <td th:text="${item.product.price * item.quantity}"></td>
+
+                <td>
+                    <form th:action="@{/cart/delete/{id}(id=${item.id})}" method="post">
+                        <button type="submit">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3>Tổng cộng:
+            <span th:text="${totalAmount}"></span>
+        </h3>
+
+        <a th:href="@{/checkout}">Thanh Toán</a>
+    </div>
+
+</body>
+</html>

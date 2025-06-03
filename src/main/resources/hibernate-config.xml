@@ -15,5 +15,9 @@
         <property name="hbm2ddl.auto">update</property>
 
         <mapping class="ra.entity.Customer"/>
+        <mapping class="ra.entity.Order"/>
+        <mapping class="ra.entity.OrderItem"/>
+        <mapping class="ra.entity.Product"/>
+        <mapping class="ra.entity.ProductCart"/>
     </session-factory>
 </hibernate-configuration>

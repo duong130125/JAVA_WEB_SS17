@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h2>Thông Tin Thanh Toán</h2>
+
+  <form th:action="@{/checkout}" th:object="${order}" method="post">
+    <label>Họ tên người nhận:</label>
+    <input type="text" th:field="*{recipientName}" required/><br/>
+
+    <label>Số điện thoại:</label>
+    <input type="text" th:field="*{phoneNumber}" required/><br/>
+
+    <label>Địa chỉ:</label>
+    <input type="text" th:field="*{address}" required/><br/>
+
+    <label>Tổng tiền:</label>
+    <input type="text" th:field="*{totalMoney}" readonly/><br/>
+
+    <button type="submit">Xác nhận đặt hàng</button>
+  </form>
+</body>
+</html>
